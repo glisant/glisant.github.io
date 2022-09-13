@@ -1,0 +1,428 @@
+<html>
+    <head>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.2.0/math.js'></script>
+        <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+        <script>
+			window.MathJax = {
+					"fast-preview": {
+							   disabled: true
+					},
+					AuthorInit: function() {
+						MathJax.Hub.Register.StartupHook('End', function() {
+							MathJax.Hub.processSectionDelay = 0
+							var demoSource = document.getElementById('demoSource')
+							var demoRendering = document.getElementById('demoRendering')
+							var math = MathJax.Hub.getAllJax('demoRendering')[0]
+							demoSource.addEventListener('input', function() {
+								MathJax.Hub.Queue(['Text', math, 'x_(t+1)='+demoSource.value])
+							})
+						})
+					}
+				};
+		</script>
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML-full"></script>
+    </head>
+    <body>
+        <h1 id="header">BIOL 309 Graphing Tool</h1>
+        <table style="width: 1015px; border:1px solid black">
+            <tbody><tr style="width: 100%; border:1px solid black">
+                <tr>
+                    <td>
+                        Insert your function here:
+                    </td>
+                    <td>
+                        Function you are graphing:
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td>
+                        
+                        <textarea class="ioArea" id="demoSource" spellcheck="true" style="position: sticky;font-size:25px; display: inline-block;height: 35px;">2.45*x*(1-x)</textarea>
+                    
+                    </td>
+                    <td>
+                        
+                        <div class="ioArea" id="demoRendering" style="position: relative;font-size:18px;">
+                        <script type="math/asciimath" id="MathJax-Element-1" >x_(t+1)=2.45*x*(1-x)</script>
+                            
+                        </div>
+                    </td>
+            
+                </tr>
+                <tr>
+                    <td>
+                        Initial Value:  
+                    
+                    
+                        <input id="Itext" value="0.2" style="width:120px" type="range" min="0" max="1.0" step="0.01">
+                        
+                        
+                        <input type="text" id="xvalue" style="display:inline; width: 50px;" value="0.2"></input>
+                        
+                            Length of Iteration: 
+
+                                                  
+                        
+                            <input type="text" id="itnum" style="display:inline; width: 50px;" value="50"></input>
+                        
+                
+
+                        <td><button id="but1" style="display:inline" onclick="graph_function(document.getElementById('demoSource').value),graph_cont()">Graph Iterations</button></td>
+
+                        
+
+
+                        
+                        
+                        
+                        <script>
+                            
+                            document.getElementById('Itext').oninput = function() {
+                                //clearInterval(inter);
+                                xvalue.value = this.value;
+                                graph_function(document.getElementById('demoSource').value);
+                                //document.getElementById("but1").click();
+                                
+
+                            };
+                        </script>
+                        
+                    
+                    </td>
+                    <td>
+                         
+                    
+                    
+                        
+                    
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="width: 1000px; border:2px solid black">
+            <tr><td><div id="myPlot" style="display:inline-block;width:500px;height:500px;border:1px solid #1940c0;"></div></td>
+                <br>
+                <td><div id="myPlot1" style="display:inline-block;width:500px;height:500px;border:1px solid #1940c0;"></div></td></tr>
+            
+        </table>
+        <br>
+        <table id="table" border="1">
+            <tr>
+                <th>Last Iterations :</th>
+            </tr>
+            
+        </table>
+        <script>
+            Plotly.newPlot('myPlot1',[{
+                y:[],
+                type:'line'
+                }]);
+                Plotly.newPlot('myPlot',[{
+                y:[],
+                type:'line'
+                }]);
+        
+            table = document.getElementById("table");
+        
+        
+           
+        </script>
+        
+        <script>
+            function getdata(fun,x_range=[0,10001],funvar={x:0}) {
+                var trace1 = {
+                    x: [],
+                    y: [],
+                };
+                var curr_x=0.000001     
+                
+                
+                for (let i = x_range[0]; i < x_range[1]; i++) {
+                    //console.log(i,trace1,math.evaluate(fun,funvar));
+                    funvar['x']=i/10000;
+                    trace1['x'].push(funvar['x']);
+                    trace1['y'].push((math.evaluate(fun,funvar)));
+                    
+                    
+
+                };
+
+                /*
+                #########To iterate:
+                for (let i = x_range[0]; i < x_range[1]; i++) {
+                    
+                    funvar['x']=curr_x;
+                    trace1['x'].push(i);
+                    trace1['y'].push(curr_x);
+                    curr_x=(math.evaluate(fun,funvar));
+                    
+
+                };
+                */
+                //x1=3.4*x*(1-x);
+                //if (reiterate_it==false) return x1;
+                //#else return b*x1*(1-x1);
+                //return x1;
+                //console.log(trace1)
+
+                return trace1
+            };
+            function graph_function(uinp,range=[0,10001], funvar={x:0},it=false){
+                
+                var trace= getdata(uinp,range);
+                //console.log(trace);
+                var layout = {
+                    grid: {rows: 1, columns: 2, pattern: 'independent'},
+                };
+                var trace2 = {
+                    x: [0, 3],
+                    y: [0, 3],
+                    type: 'line'
+                };
+
+                var layout = {
+                    showlegend: false,
+                    margin: {
+                        l: 5,
+                        r: 5,
+                        b: 10,
+                        t: 10,
+                        pad: 1
+                    },
+                    xaxis: {
+                    autotick: false,
+                    ticks: 'outside',
+                    tick0: 0,
+                    range:[0,1],
+                    dtick: 0.25,
+                    ticklen: 8,
+                    tickwidth: 4,
+                    tickcolor: '#000'
+                    },
+                    yaxis: {
+                    autotick: false,
+                    ticks: 'outside',
+                    tick0: 0,
+                    range:[0,1],
+                    dtick: 0.25,
+                    ticklen: 8,
+                    tickwidth: 4,
+                    tickcolor: '#000'}
+
+                };
+                var data = [trace,trace2];
+
+                Plotly.newPlot('myPlot', data, layout);
+                iterator_on_graph(document.getElementById('xvalue').value,data)
+                
+            };
+
+            function iterator(xi,trg){
+                //y=x
+                //var fun=document.getElementById('demoSource').value
+                var fun=document.getElementById('demoSource').value;
+                //console.log(fun);
+                funvar={x:xi}
+                if (trg==0){
+                    
+                    return (math.evaluate(fun,funvar));
+
+                };
+
+                if (trg==1){ 
+                    return (xi)
+
+                };
+                
+            };
+            function iterator_on_graph(inival,data){
+                
+                var trace3 = {
+                    x: [],
+                    y: [],
+                    type: 'line'
+                };
+                var curx=inival
+                trace3['x'].push(curx);
+                trace3['y'].push(0);
+                for (let i = 0; i < 1000; i++) {
+                    
+                    
+                    if (i%2==0){
+                        trace3['x'].push(curx);
+                        trace3['y'].push((math.evaluate(document.getElementById('demoSource').value,{x:curx})));
+                        curx=(math.evaluate(document.getElementById('demoSource').value,{x:curx}))
+                        
+                    }else{
+                        trace3['x'].push(curx);
+                        trace3['y'].push((math.evaluate(curx,{x:curx})));
+                        curx=(curx);
+                    };
+
+                };
+                
+                if (table.rows.length>1){
+                    table.deleteRow(1);};
+                table.deleteRow(0);
+                table.insertRow(0);
+                table.insertRow(1);
+                var new_cell=table.rows[0].insertCell(0);
+                new_cell.innerHTML="Last Iterations :";
+                var new_cell=table.rows[1].insertCell(0);
+                new_cell.innerHTML="";
+
+
+                /*
+                if (table.rows[0].length>2){
+                    
+                    
+                    table.rows[0].deleteCell(1)
+                    table.rows[0].deleteCell(2)
+                    table.rows[0].deleteCell(3)
+                    table.rows[0].deleteCell(4)
+                    table.rows[0].deleteCell(5)
+                        //table.deleteRow(1)
+                        //table.deleteRow(1)
+                        //table.deleteRow(1)
+                        //table.deleteRow(1)
+                        //table.deleteRow(1)
+                        
+                };*/
+
+
+
+                for(var i = trace3['y'].length-26; i < trace3['y'].length; i++){
+               // create a new row
+                    //var newRow = table.insertRow(table.length);
+                    if (i<=(trace3['y'].length-14)){var newRow = table.rows[0].insertCell(-1);
+                        newRow.innerHTML = trace3['y'][i].toFixed(6);
+                    
+                    }else {var newRow = table.rows[1].insertCell(-1);
+                        newRow.innerHTML = trace3['y'][i].toFixed(6);
+
+                    };
+                    
+               //for(var j = 0; j < trace3['y'][i].length; j++)
+               
+                   // create a new cell
+                   //var cell = newRow.insertCell(j);
+                   
+                   // add value to the cell
+                    
+               
+                };
+                
+                data.push(trace3);
+                var last_val= trace3['y'].pop();
+                
+                var layout = {
+                    showlegend: false,
+                    margin: {
+                        l: 50,
+                        r: 50,
+                        b: 50,
+                        t: 10,
+                        pad: 1
+                    },
+                    xaxis: {
+                    
+                    tick0: 0,
+                    range:[0,1],
+                    dtick: 0.25,
+                    
+                    },
+                    yaxis: {
+                    
+                    tick0: 0,
+                    range:[0,1],
+                    dtick: 0.25,}
+
+            
+                };
+                Plotly.newPlot('myPlot', data,layout);
+                
+
+                /*
+
+                Plotly.newPlot('myPlot',[{
+                y:[inival],x:[],
+                type:'line'
+                }]);
+
+                var x=0.5
+
+                var cnt = -1;
+                var inter= setInterval(function(){
+                    Plotly.extendTraces('myPlot',{y:[[iterator(inival,0)]],x:[[inival]]},[0]);
+                    cnt++;
+                    //text_1.innerHTML=cnt+' '+speed
+                    //xvalue.innerHTML="t+N value: "+x.toFixed(4)
+                    if (cnt==3){
+                        
+                        clearInterval(inter)
+
+                    }
+                    x=getdata(x)
+                });
+                */
+            };
+            var running=false
+            function graph_cont(){
+                document.getElementById("but1").disabled = true;
+                var layout = {
+                    showlegend: false,
+                    margin: {
+                        l: 50,
+                        r: 50,
+                        b: 50,
+                        t: 10,
+                        pad: 1
+                    },
+                    
+                    yaxis: {
+                    autorange:true,
+                    range:[0,1],
+                    }
+
+            
+                };
+
+                Plotly.react('myPlot1',[{
+                y:[],
+                type:'line'
+                }],layout);
+                var speed = 70;
+                var curx=document.getElementById('xvalue').value;
+                //console.log('Default',cnt,running);
+                var cnt = -1;
+                //clearInterval(inter);
+                var inter= setInterval(function(){
+                    
+                    cnt++;
+                    
+                    
+                    if (document.getElementById("itnum").value>50){speed=2};
+
+                    Plotly.extendTraces('myPlot1',{y:[[(math.evaluate(document.getElementById('demoSource').value,{x:curx}))]]},[0]);
+                    curx=(math.evaluate(document.getElementById('demoSource').value,{x:curx}));
+                    
+                    //text_1.innerHTML=cnt+' '+speed
+                    //xvalue.innerHTML="t+N value: "+x.toFixed(4)
+                    if (cnt==document.getElementById("itnum").value){
+                        
+                        clearInterval(inter);
+                        document.getElementById("but1").disabled = false;
+                        running=false
+
+                    };
+                    
+                    //x=getdata(x)
+                },speed)};
+            
+                
+        </script>
+        <br>
+        This page is based on the original cobweb iterator created by Dr. Bub: <a style="display: inline-block;"href="http://gil-bub.lab.mcgill.ca/dev/cobwebber/index.html">Logistic Map Iterator</a>
+    </body>
+</html>
