@@ -1,0 +1,233 @@
+<html>
+    <head>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.2.0/math.js'></script>
+        <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+    </head>
+    <body>
+    
+        <h1 id="header">BIOL 306 Graphing Tools</h1>
+
+        <h2 id="header">&emsp;&emsp;&emsp;1. Voltage Decay and Current Graphs:</h2>
+        
+        
+        
+
+
+
+        
+        <br>
+        <button id="butcl" style="display:inline" onclick="clear_graphs()">Clear All</button>
+        
+        <table style="width: 1000px; border:2px solid black">
+            <tr><td>Initial Voltage: <input type="text" id="IVol" style="display:inline; width: 50px;" value="100"></input>
+                Lambda Value: <input type="text" id="Lam" style="display:inline; width: 50px;" value="0.03"></input>
+                <button id="but1" style="display:inline" onclick="graph_voltage(V0=document.getElementById('IVol').value,lamb=document.getElementById('Lam').value)">Graph Voltage</button>
+                <div id="myPlot" style="display:inline-block;width:500px;height:500px;border:1px solid #1940c0;"></div></td>
+                
+                <td>ENa: <input type="text" id="ena" style="display:inline; width: 40px;" value="40"></input>
+                    Ek: <input type="text" id="ek" style="display:inline; width: 40px;" value="-70"></input>
+                    gNa: <input type="text" id="gna" style="display:inline; width: 40px;" value="1"></input>
+                    gK: <input type="text" id="gk" style="display:inline; width: 40px;" value="0.7"></input>
+                    Label:<input type="text" id="label" style="display:inline; width: 100px;" value="Saline"></input>
+                    <button id="but2" style="display:inline" onclick="create_graph_current_2(document.getElementById('ena').value,document.getElementById('ek').value,
+                    document.getElementById('gna').value,document.getElementById('gk').value,document.getElementById('label').value)">Graph</button><div id="myPlot1" style="display:inline-block;width:500px;height:500px;border:1px solid #1940c0;"></div></td>
+                <td>ENa: <input type="text" id="ena2" style="display:inline; width: 40px;" value="35"></input>
+                    Ek: <input type="text" id="ek2" style="display:inline; width: 40px;" value="-70"></input>
+                    gK: <input type="text" id="gk2" style="display:inline; width: 40px;" value="1"></input>
+                    Label:<input type="text" id="label2" style="display:inline; width: 100px;" value="Saline"></input>
+                    <button id="butcond" style="display:inline" onclick="graph_vm(document.getElementById('ek2').value,document.getElementById('ena2').value,
+                    document.getElementById('gk2').value,document.getElementById('label2').value)">Graph</button><div id="myPlot2" style="display:inline-block;width:500px;height:500px;border:1px solid #1940c0;"></div></td></tr>
+            
+        </table>
+        <h2 id="header">&emsp;&emsp;&emsp;2. Quick Calculators:</h2>
+        
+        <table style= "width: 300px; border:2px solid black">
+            <tr><td>
+                <h3 id="header">&emsp;The Nernst Equation:</h2>
+                Outside Concentration:&nbsp;&nbsp;&nbsp; <input type="text" id="out1" style="width: 60px;" value="unk"></input>
+                <br>
+                Inside Concentration: &emsp;&nbsp;&nbsp;<input type="text" id="in1" style=" width: 60px;" value="unk"></input>
+                <br>
+                Resting Potential: &emsp;&emsp;&emsp;<input type="text" id="vm1" style=" width: 60px;" value="unk"></input>
+                <br>
+                <button id="but4" style="display:inline" onclick="nernst(document.getElementById('vm1').value,document.getElementById('out1').value,document.getElementById('in1').value)">Calculate Missing: </button>
+                <input type="text" id="result" style="display:inline; width: 100px;" value=""></input>
+            </tr></td>
+        </table>
+        <script>
+            clear_graphs()
+            function clear_graphs(){
+                Plotly.newPlot('myPlot');
+                Plotly.newPlot('myPlot1');
+                Plotly.newPlot('myPlot2');
+                data_for_graphs3=[]
+                data_for_graphs1=[]
+                data_for_graphs0=[]
+            };
+            
+            function find_voltage(V0=100,x=0.5,lamb=0.03){
+                return (V0*(Math.exp(-x/lamb)));
+            };
+            var data_for_graphs3=[]
+            function graph_vm(Ek=-70,Ena=50,gk=1,label=''){
+                //console.log(gk,Ek,Ena)
+                var gNa=0
+                var trace1 = {
+                    x: [],
+                    y: [],
+                    name: label
+                };
+                
+                var layout = {
+                    xaxis: {
+                        type: 'log',
+                        autorange: true,
+                        title: 'Conductance Value'
+                    },
+                    yaxis: {
+                        title: 'Membrane Potential (mV)'},
+                    title: {
+                        text:'Vm vs Conductance'}
+                    //yaxis: {
+                        //type: 'log',
+                        //autorange: true
+                    //}
+                };
+                var for_run=Number(gk);
+                for (let i=0; i<100000; i++){
+                    trace1['x'].push(gNa);
+                    //vm=((gk*Ek)+(gNa*Ena))/(gk+gNa);
+                    var a=(for_run*Ek);
+                    var b=(gNa*Ena);
+                    var c=(for_run+gNa);
+                    var d=a+b
+                    //console.log(a,b,c,d)
+                    trace1['y'].push(d/c)
+                    gNa+=0.001;
+                };
+                //console.log(trace1['y']);
+                data_for_graphs3.push(trace1);
+                Plotly.newPlot('myPlot2', data_for_graphs3,layout);
+
+            };
+            
+            function graph_voltage(V0=100,lamb=0.03){
+                var x=0
+                //console.log(V0,lamb);
+                //var vol=[]
+                //var xs=[]
+                var trace1 = {
+                    x: [],
+                    y: [],
+                    name: 'V0: '+V0
+                };
+
+                var trace2 = {
+                    x: [lamb],
+                    y: [V0*0.37],
+                    name: '37% of V0'
+                };
+                var layout = {
+                    xaxis: {
+                        //type: 'log',
+                        autorange: true,
+                        title: 'Distance'
+                    },
+                    yaxis: {
+                        title: 'Volage (mV)'},
+                    title: {
+                        text:'Change in Voltage'}
+                    //yaxis: {
+                        //type: 'log',
+                        //autorange: true
+                    //}
+                };
+                var vo=100
+                while (vo>0.01){
+                    vo=find_voltage(V0,x,lamb)
+                    trace1['y'].push(vo);
+                    trace1['x'].push(x);
+                    x+=0.000001;
+                };
+                var data = [trace1,trace2];
+                data_for_graphs0.push(trace1)
+                data_for_graphs0.push(trace2)
+                //console.log(data);
+                Plotly.newPlot('myPlot', data_for_graphs0,layout);
+
+                //plt.plot(xs,vol)
+                //plt.plot(lamb,V0*0.37,marker="o", markersize=5)}
+                    
+                
+            };
+            var data_for_graphs1=[]
+            var data_for_graphs0=[]
+            function create_graph_current_2(ENa=40,Ek=-70,gNa=1,gK=1,label=''){
+    
+                var Vm=-90;
+                var trace1 = {
+                    x: [],
+                    y: [],
+                    name: label
+                };
+                var trace2 = {
+                    x: [10],
+                    y: [0.37],
+                    name: '37% of V0'
+                };
+                var layout = {
+                    xaxis:{
+                    title: 'Membrane Potential (mV)',
+                    constraintoward: 'center'
+                    },
+                    yaxis: {
+                        title: 'Currents',
+                        constraintoward: 'center'},
+                    title: {
+                        text:'Current Graph'}
+                    //yaxis: {
+                        //type: 'log',
+                        //autorange: true
+                    //}
+                };
+                while (Vm<30){
+                    trace1['x'].push(Vm);
+                    Ik=gK*(Vm-Ek);
+                    INa=gNa*(Vm-ENa);
+                    trace1['y'].push(Ik+INa);   
+                    Vm+=0.001;
+                };
+                data_for_graphs1.push(trace1)
+                //var data = [trace1];
+                //console.log(data,Vm)
+                Plotly.newPlot('myPlot1',data_for_graphs1,layout );
+            };
+
+            function nernst(charge='unk',i_out='unk',i_in='unk'){
+                //console.log(charge,i_out,i_in);
+                if (charge=='unk'){
+                    //return 58*Math.log10(i_out/i_in)
+                    //console.log('hello');
+                    document.getElementById('result').value=(58*Math.log10(i_out/i_in)).toFixed(4)+ ' mV'
+
+                };
+
+                if (i_out=='unk'){
+                    //return (10**(charge/58))*i_in
+                    document.getElementById('result').value=((10**(charge/58))*i_in).toFixed(4)+ ' mM'
+
+                };
+
+                if (i_in=='unk'){
+                    //return i_out/(10**(charge/58))
+                    //document.getElementById('result').value=i_out/(10**(charge/58))
+                    document.getElementById('result').value=(i_out/(10**(charge/58))).toFixed(4)+ ' mM'
+
+                };
+                
+            };
+            //plt.plot(vms,currents,label=label)};
+        </script>
+    </body>
+    
+</html>
