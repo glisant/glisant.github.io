@@ -1,0 +1,198 @@
+*{
+    margin:0;
+    padding: 0;
+    font-family: "poppins", sans-serif;
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.main{
+    background: #000917;
+    background: linear-gradient(-90deg,#052d3b,#052d3b, #37051a, #000917, #04202a);
+    background-size: 400% 400%;
+    animation: gradient 8s ease;
+    min-height: 100vh;
+    width: 100%;
+    color: #fff;
+    position: relative;
+
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+        
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+nav{
+    
+    display: flex;
+    align-items: center;
+    padding: 60px 8%;
+
+}
+
+nav ul{
+    flex:1;
+    text-align: right;
+    align-items: center;
+}
+
+nav ul li{
+    display: inline-block;
+    list-style: none;
+    margin: 0 40px;
+}
+
+.navi{
+    font-size: 28px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.navi:hover{
+    color: #b48282;
+    text-shadow: #b48282 0px 0px 20px;
+    transition: 0.5s;
+    
+}
+
+.A19logo{
+    position: absolute;
+    top: 250px;
+    left: 120px;
+    align-items: center;
+   
+    padding: 0px 30px 10px 30px ;
+    text-align: center;
+
+}
+h1.text-logo-area{
+    font-size: 160px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+h1.text-logo-medical{
+    font-size: 110px;
+    font-family:'Gill Sans', sans-serif;
+    color: #229ed7;
+
+}
+
+.logo{
+    height: 140px;
+    padding: 20px;
+
+    position: fixed;
+}
+
+.text-container{
+    max-width: 600px;
+    margin-top: 7%;
+    margin-left: 55%;
+    text-align: center;
+    line-height: 80px;
+}
+
+.text-container .launch-time{
+   position: relative;
+   line-height: 45px;
+   padding-left: 15%;
+   display: flex;
+}
+.text-container .launch-time div{
+    flex-basis: 100px;
+}
+
+.text-container .launch-time div p{
+    font-size: 45px;
+}
+
+.text-container h1{
+   font-size: 80px;
+   font-weight: 700;
+   color: #a1282a;
+   text-shadow: rgb(244, 244, 245) 10px -20px 100px;
+   
+
+   animation: coming 4s infinite alternate linear;
+}
+
+
+
+@keyframes coming {
+    from {color:#a1282a;
+        text-shadow: rgb(207, 161, 161) 10px -20px 100px;}
+    to{color: #229ed7;
+        text-shadow: rgb(167, 165, 200) 10px -20px 100px;}
+    
+}
+
+.text-container h1 span{
+    font-size: 80px;
+    font-weight: 700;
+    color: #229ed7;
+    animation: coming 4s infinite alternate-reverse linear;
+ }
+
+.text-container p{
+    font-size: 25px;
+    font-weight: 400;
+ }
+
+ .text-container button{
+    line-height: 55px;
+    background:transparent;
+    width: 250px;
+    color:#229ed7 ;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    font-size: 25px;
+    text-align: center ;
+    font-weight: 400;
+ }
+
+ .text-container button:hover {
+    background:white;
+    transition: 1s;
+    cursor: pointer;
+  }
+
+  footer {
+    font-size: 15px;
+    margin-top: auto;
+    display: block;
+    text-align: center;
+    padding: 3px;
+    color:#759db7;
+  }
+
+  .dotblue{
+    height: 15px;
+    width: 15px;
+    background-color:#229ed7;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 3%;
+  }
+
+  .dotred{
+    height: 15px;
+    width: 15px;
+    background-color:#a1282a;
+    margin: 3%;
+    border-radius: 50%;
+    display: inline-block;
+  }
