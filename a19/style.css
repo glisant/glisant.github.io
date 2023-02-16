@@ -12,9 +12,9 @@ body{
 }
 .main{
     background: #000917;
-    background: linear-gradient(-90deg,#052d3b,#052d3b, #37051a, #000917, #04202a);
+    background: linear-gradient(-90deg,#052d3b,#052d3b, #290413, #000917, #04202a);
     background-size: 400% 400%;
-    animation: gradient 8s ease;
+    animation: gradient 4s ease;
     min-height: 100vh;
     width: 100%;
     color: #fff;
@@ -27,7 +27,7 @@ body{
 		background-position: 0% 50%;
 	}
 	50% {
-		background-position: 100% 50%;
+		background-position: 60% 50%;
         
 	}
 	100% {
@@ -99,11 +99,12 @@ h1.text-logo-medical{
 }
 
 .text-container{
+    
     max-width: 600px;
     margin-top: 7%;
     margin-left: 55%;
     text-align: center;
-    line-height: 80px;
+    line-height: 90px;
 }
 
 .text-container .launch-time{
@@ -121,30 +122,40 @@ h1.text-logo-medical{
 }
 
 .text-container h1{
+    animation: background-pan 7s linear infinite;
+    background: linear-gradient(
+    to right,
+    #690b16,
+    #229ed7,
+    #d72246,
+    #690b16
+  );
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
    font-size: 80px;
    font-weight: 700;
    color: #a1282a;
-   text-shadow: rgb(244, 244, 245) 10px -20px 100px;
-   
-
-   animation: coming 4s infinite alternate linear;
+   text-shadow: rgb(244, 244, 245) 10px -20px 100px; 
 }
 
-
-
-@keyframes coming {
-    from {color:#a1282a;
-        text-shadow: rgb(207, 161, 161) 10px -20px 100px;}
-    to{color: #229ed7;
-        text-shadow: rgb(167, 165, 200) 10px -20px 100px;}
+@keyframes background-pan {
+    from {
+      background-position: 0% center;
+    }
     
-}
+    to {
+      background-position: -200% center;
+    }
+  }
+
 
 .text-container h1 span{
     font-size: 80px;
     font-weight: 700;
     color: #229ed7;
-    animation: coming 4s infinite alternate-reverse linear;
+
  }
 
 .text-container p{
