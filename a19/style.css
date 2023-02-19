@@ -1,8 +1,8 @@
 *{
     margin:0;
     padding: 0;
-    font-family: "poppins", sans-serif;
     scroll-behavior: smooth;
+    font-family: "poppins", sans-serif;
 
 }
 
@@ -15,13 +15,14 @@
 }
 
 body{
+    
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 .main{
     background: #000917;
-    background: linear-gradient(-45deg,#001a43,#000917, #000f27, #000917);
+    background: linear-gradient(-45deg,#001a43,#000917, #000f27, #000917,#001a43);
     background-size: 400% 400%;
     animation: gradient 20s ease infinite;
     min-height: 100vh;
@@ -393,12 +394,41 @@ nav ul li{
     width: 1600px;
     align-items: center;
     line-height: 200%;
+    margin: auto;
+
+}
+
+.contact .row{
+    display: flex;
+
+
+}
+
+.contact-col-e{
+    border: 2px solid #229ed7;
+    width: 380px;
+    border-radius: 20px;
+    padding: 50px 40px 50px 90px;
+    margin-bottom: 120px;
+    background: rgba(128, 128, 128, 0.163);
+    transition: 0.5s;
+    
+}
+
+.contact-col-e:hover{
+    background: #51515165;
+
+}
+
+.contact-col-e .fa{
+    font-size: 28px;
+    color: #f8fafc;
 
 }
 
 .contact-col input, .contact-col textarea{
     font-size: 18px;
-    width: 50%;
+    width: 80%;
     padding:15px ;
     margin-bottom: 17px;
     outline: none;
@@ -408,6 +438,16 @@ nav ul li{
     box-sizing: border-box;
     
 
+}
+.email{
+    text-decoration: none;
+    color: #229ed7;
+    transition: 0.5s;
+}
+
+.email:hover{
+    
+    color: #12668d;
 }
 
 .line{
