@@ -13,11 +13,13 @@
     width: 1600px;
 
 }
+.allcontent{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
 
-body{
-    
-    min-height: 100vh;
-    display: flex;
+body{    
     flex-direction: column;
 }
 .main{
@@ -25,11 +27,12 @@ body{
     background: linear-gradient(-45deg,#001a43,#000917, #000f27, #000917,#001a43);
     background-size: 400% 400%;
     animation: gradient 20s ease infinite;
-    min-height: 100vh;
-    
     width: 100%;
     color: #fff;
     position: relative;
+    width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
 
 }
 
@@ -50,7 +53,7 @@ body{
 nav{
     display: flex;
     align-items: center;
-    padding: 50px 8%;
+    padding: 50px 3%;
 
 }
 
@@ -174,13 +177,11 @@ nav ul li{
 
 .Wbutton:hover {
     background:rgba(195, 195, 195, 0.439);
-   
-    
     transition: 1s;
     cursor: pointer;
   }
 
-  footer {
+footer {
     font-size: 15px;
     margin-top: auto;
     display: block;
@@ -189,36 +190,33 @@ nav ul li{
     color:#759db7;
   }
 
-  .learn-more{
+.learn-more{
 
     text-align: center;
     margin-top: 10%;
     font-size: 20px;
-    width: 50%;
-    align-self:center; 
+    width: 100%;
   }
 
-  .learn-more li{
+.learn-more li{
     list-style: none;
     color: #fff;
   }
 
-  .navi-learn{
+.navi-learn{
     font-size: 160%;
     color: #fff;
     text-decoration: none;
     transition: 0.5s;
 
   }
-
-
-  .navi-learn:hover {
+.navi-learn:hover {
     color: #229ed7;
     text-shadow:#229ed7 0px 0px 4px;
     transition: 0.5s;
   }
 
-  .separate{
+.separate{
     
     height: 150px;
   }
@@ -227,7 +225,7 @@ nav ul li{
 .scroll-down {
   width:23px;
   height: 23px;
-  margin-left: 49%;
+  margin-left: 49.5%;
   border-bottom: 2px solid #229ed7;
   border-right: 2px solid #229ed7;
   -webkit-transform: translate(-50%, 0%) rotate(45deg);
@@ -413,6 +411,7 @@ nav ul li{
     background: rgba(128, 128, 128, 0.163);
     transition: 0.5s;
     
+    
 }
 
 .contact-col-e:hover{
@@ -422,11 +421,12 @@ nav ul li{
 
 .contact-col-e .fa{
     font-size: 28px;
-    color: #f8fafc;
+    color: #fcf8f8;
 
 }
 
 .contact-col input, .contact-col textarea{
+    
     font-size: 18px;
     width: 80%;
     padding:15px ;
@@ -434,9 +434,15 @@ nav ul li{
     outline: none;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background: #ffffffe0;
+    background: rgba(128, 128, 128, 0.163);
     box-sizing: border-box;
+    color: rgb(255, 255, 255);
     
+
+}
+
+.contact-col input::placeholder, .contact-col textarea::placeholder{
+    color: rgb(192, 191, 194);
 
 }
 .email{
@@ -458,11 +464,11 @@ nav ul li{
     #0c3e55,
     #229ed7,
     #229ed7
-   );
-   background-size: 200%;
+    );
+    background-size: 200%;
 
     animation: line-flow 3s linear infinite ;
-    
+
     width: 800px;
     align-self: center;
     height: 5px;
